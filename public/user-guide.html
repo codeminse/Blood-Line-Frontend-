@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ফেনী ব্লাড লাইন — ব্যবহার নির্দেশিকা</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans Bengali', Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #1f2937;
+      background: #fff;
+    }
+
+    /* ── Page layout ── */
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 48px;
+    }
+
+    /* ── Cover ── */
+    .cover {
+      text-align: center;
+      padding: 60px 40px 50px;
+      background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);
+      border-radius: 16px;
+      color: #fff;
+      margin-bottom: 48px;
+    }
+    .cover-logo { font-size: 13px; letter-spacing: 0.2em; opacity: 0.7; text-transform: uppercase; margin-bottom: 18px; }
+    .cover h1 { font-size: 32px; font-weight: 800; line-height: 1.25; }
+    .cover-sub { margin-top: 12px; font-size: 14px; opacity: 0.85; }
+    .cover-badge {
+      display: inline-block;
+      margin-top: 24px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 18px;
+      border-radius: 99px;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Section headers ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #fca5a5;
+    }
+    .section-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: #b91c1c;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .section-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #7f1d1d;
+    }
+    .section-header .sub {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+
+    /* ── Step cards ── */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #fafafa;
+      border: 1px solid #f3f4f6;
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .step-num {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: #b91c1c;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-body {}
+    .step-title { font-weight: 700; font-size: 13.5px; color: #111827; margin-bottom: 3px; }
+    .step-desc { font-size: 12.5px; color: #4b5563; line-height: 1.65; }
+    .step-tip {
+      margin-top: 7px;
+      padding: 6px 10px;
+      background: #fef2f2;
+      border-left: 3px solid #b91c1c;
+      border-radius: 0 6px 6px 0;
+      font-size: 11.5px;
+      color: #7f1d1d;
+    }
+    .step-tip strong { font-weight: 700; }
+
+    /* ── Two-column grid ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .info-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .info-box .label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #9ca3af;
+      margin-bottom: 5px;
+    }
+    .info-box .val { font-size: 13px; font-weight: 600; color: #111827; }
+
+    /* ── Alert / note ── */
+    .alert {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin: 14px 0;
+      font-size: 12.5px;
+      color: #7f1d1d;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: -1px; }
+
+    /* ── Flow diagram ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 18px 0;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      background: #fff;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      white-space: nowrap;
+    }
+    .flow-box.active { background: #b91c1c; border-color: #b91c1c; color: #fff; }
+    .flow-arrow { font-size: 16px; color: #9ca3af; padding: 0 6px; }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 14px; }
+    th {
+      background: #7f1d1d;
+      color: #fff;
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 700;
+    }
+    th:first-child { border-radius: 8px 0 0 0; }
+    th:last-child { border-radius: 0 8px 0 0; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f3f4f6; color: #374151; }
+    tr:nth-child(even) td { background: #fafafa; }
+
+    /* ── Divider ── */
+    .divider { border: none; border-top: 1px solid #f3f4f6; margin: 32px 0; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      font-size: 11.5px;
+      color: #9ca3af;
+    }
+    .footer strong { color: #b91c1c; }
+
+    /* ── Print settings ── */
+    @media print {
+      body { font-size: 12px; }
+      .page { padding: 20px 30px; }
+      .cover { page-break-after: always; }
+      .no-break { page-break-inside: avoid; }
+      @page { margin: 15mm; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ COVER ══ -->
+  <div class="cover">
+    <div class="cover-logo">🩸 Feni Blood Line</div>
+    <h1>ব্যবহারকারী ও কমিউনিটি<br>নির্দেশিকা</h1>
+    <div class="cover-sub">সম্পূর্ণ বাংলা গাইড — ধাপে ধাপে ব্যবহার পদ্ধতি</div>
+    <div class="cover-badge">fenibloodline.com</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PART 1: ব্যবহারকারী (ডোনার)              -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <div class="section-header no-break">
+    <div class="section-icon">👤</div>
+    <div>
+      <h2>অংশ ১ — রক্তদাতা ব্যবহারকারী</h2>
+      <div class="sub">যারা রক্তদাতা হিসেবে নিবন্ধন করতে চান তাদের জন্য</div>
+    </div>
+  </div>
+
+  <!-- Step flow -->
+  <div class="flow">
+    <div class="flow-box active">নিবন্ধন</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">প্রোফাইল পূরণ</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">ডোনার তালিকায়</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">আইডি কার্ড</div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step no-break">
+      <div class="step-num">১</div>
+      <div class="step-body">
+        <div class="step-title">ওয়েবসাইটে প্রবেশ করুন</div>
+        <div class="step-desc">
+          ব্রাউজারে <strong>fenibloodline.com</strong> খুলুন। উপরের মেনু থেকে <strong>"Be a Donor" / "ডোনার হন"</strong> বাটনে ক্লিক করুন।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">২</div>
+      <div class="step-body">
+        <div class="step-title">Google দিয়ে সাইন ইন করুন</div>
+        <div class="step-desc">
+          লগইন পেজে <strong>"Sign in with Google"</strong> বাটনে ক্লিক করুন। আপনার Gmail অ্যাকাউন্ট দিয়ে লগইন করুন। কোনো পাসওয়ার্ড লাগবে না।
+        </div>
+        <div class="step-tip">
+          <strong>টিপস:</strong> যে Gmail দিয়ে লগইন করবেন সেটি মনে রাখুন — পরে এটি দিয়েই প্রোফাইল পরিচালনা করতে হবে।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৩</div>
+      <div class="step-body">
+        <div class="step-title">প্রোফাইল সম্পূর্ণ করুন</div>
+        <div class="step-desc">
+          লগইনের পরে <strong>"Register as Donor" / "ডোনার হিসেবে নিবন্ধন করুন"</strong> পেজে নিচের তথ্যগুলো পূরণ করুন:
+        </div>
+        <div class="two-col" style="margin-top: 10px;">
+          <div class="info-box">
+            <div class="label">পূর্ণ নাম</div>
+            <div class="val">আপনার সম্পূর্ণ নাম বাংলা বা ইংরেজিতে</div>
+          </div>
+          <div class="info-box">
+            <div class="label">ফোন নম্বর</div>
+            <div class="val">01XXXXXXXXX ফরম্যাটে</div>
+          </div>
+          <div class="info-box">
+            <div class="label">রক্তের গ্রুপ</div>
+            <div class="val">A+, A-, B+, B-, AB+, AB-, O+, O-</div>
+          </div>
+          <div class="info-box">
+            <div class="label">এলাকা</div>
+            <div class="val">ফেনী সদর, ছাগলনাইয়া, দাগনভূঞা ইত্যাদি</div>
+          </div>
+          <div class="info-box">
+            <div class="label">বাড়ির ঠিকানা</div>
+            <div class="val">গ্রাম/মহল্লার নাম</div>
+          </div>
+          <div class="info-box">
+            <div class="label">রক্তদানে প্রস্তুত</div>
+            <div class="val">টগল চালু করলে আপনি ডোনার তালিকায় দেখাবেন</div>
+          </div>
+        </div>
+        <div class="step-tip" style="margin-top: 10px;">
+          <strong>গুরুত্বপূর্ণ:</strong> "রক্তদানে প্রস্তুত" টগল চালু না করলে আপনি ডোনার তালিকায় দেখা যাবেন না।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৪</div>
+      <div class="step-body">
+        <div class="step-title">নিবন্ধন সম্পন্ন করুন</div>
+        <div class="step-desc">
+          সব তথ্য পূরণ করে <strong>"Complete Registration"</strong> বাটনে ক্লিক করুন। সফল হলে আপনি স্বয়ংক্রিয়ভাবে ডোনার তালিকায় যুক্ত হয়ে যাবেন।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৫</div>
+      <div class="step-body">
+        <div class="step-title">আইডি কার্ড ডাউনলোড করুন</div>
+        <div class="step-desc">
+          প্রোফাইল পেজে লগইন করলে আইডি কার্ডের বাটন পাবেন। ক্লিক করলে একটি পপআপে আপনার ডিজিটাল আইডি কার্ড দেখাবে। <strong>"Download PNG"</strong> বাটনে ক্লিক করে ছবি হিসেবে সেভ করুন এবং প্রিন্ট করুন।
+        </div>
+        <div class="step-tip">
+          <strong>টিপস:</strong> আইডি কার্ডে আপনার নাম, রক্তের গ্রুপ, ফোন, ঠিকানা এবং Feni Blood Line-এর ব্র্যান্ডিং থাকবে।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৬</div>
+      <div class="step-body">
+        <div class="step-title">প্রোফাইল পরিচালনা করুন</div>
+        <div class="step-desc">
+          "My Profile" মেনুতে গিয়ে যেকোনো সময় প্রোফাইল আপডেট করতে পারবেন। উপলব্ধতা চালু/বন্ধ করতে পারবেন। রক্তদানের রেকর্ড যোগ করতে পারবেন।
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── রক্তদাতা খোঁজার নিয়ম ─── -->
+  <div class="section-header no-break" style="margin-top: 36px;">
+    <div class="section-icon">🔍</div>
+    <div>
+      <h2>রক্তদাতা ও জরুরি রক্ত খোঁজার নিয়ম</h2>
+      <div class="sub">রক্ত খুঁজতে বা জরুরি অনুরোধ দেখতে</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step no-break">
+      <div class="step-num">১</div>
+      <div class="step-body">
+        <div class="step-title">রক্তদাতা খুঁজুন — Find Donor</div>
+        <div class="step-desc">
+          মেনু থেকে <strong>"Find Donor"</strong> পেজে যান। রক্তের গ্রুপ এবং এলাকা নির্বাচন করে সার্চ করুন। প্রতিটি কার্ডে ডোনারের ফোন নম্বর থাকবে — সরাসরি কল করুন।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">২</div>
+      <div class="step-body">
+        <div class="step-title">জরুরি রক্তের অনুরোধ দেখুন — Emergency</div>
+        <div class="step-desc">
+          <strong>"Emergency"</strong> পেজে হাসপাতাল থেকে দেওয়া জরুরি রক্তের অনুরোধ দেখতে পাবেন। হাসপাতালের নাম, রক্তের গ্রুপ দিয়ে ফিল্টার করুন এবং সরাসরি হাসপাতালে যোগাযোগ করুন।
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- PART 2: কমিউনিটি                         -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <div class="section-header no-break">
+    <div class="section-icon">🏛️</div>
+    <div>
+      <h2>অংশ ২ — রক্তদান কমিউনিটি</h2>
+      <div class="sub">যারা সংগঠন/কমিউনিটি হিসেবে নিবন্ধন করতে চান</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-box active">নিবন্ধন জমা</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">অ্যাডমিন অনুমোদন</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">ড্যাশবোর্ড অ্যাক্সেস</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">সদস্য ও দান পরিচালনা</div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <strong>অনুমোদন প্রক্রিয়া:</strong> কমিউনিটি নিবন্ধন জমা দেওয়ার পরে সিস্টেম অ্যাডমিন যাচাই করে অনুমোদন দেবেন। অনুমোদনের আগে ড্যাশবোর্ড অ্যাক্সেস পাবেন না। অনুমোদন পেলে নিবন্ধিত ইমেইলে তথ্য পাবেন।
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step no-break">
+      <div class="step-num">১</div>
+      <div class="step-body">
+        <div class="step-title">কমিউনিটি নিবন্ধন পেজে যান</div>
+        <div class="step-desc">
+          মেনু থেকে <strong>"Community Register"</strong> লিংকে যান অথবা সরাসরি <strong>fenibloodline.com/community/register</strong> খুলুন। কোনো লগইন ছাড়াই নিবন্ধন ফর্ম পূরণ করতে পারবেন।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">২</div>
+      <div class="step-body">
+        <div class="step-title">নিবন্ধন ফর্ম পূরণ করুন</div>
+        <div class="step-desc">নিচের তথ্যগুলো পূরণ করুন:</div>
+        <table style="margin-top: 10px;">
+          <thead>
+            <tr>
+              <th>তথ্য</th>
+              <th>বিবরণ</th>
+              <th>বাধ্যতামূলক?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>কমিউনিটি লোগো</td><td>PNG বা JPG ছবি, সর্বোচ্চ ৩ MB</td><td>✅ হ্যাঁ</td></tr>
+            <tr><td>কমিউনিটির নাম</td><td>সংগঠনের সম্পূর্ণ নাম</td><td>✅ হ্যাঁ</td></tr>
+            <tr><td>ফোন নম্বর</td><td>যোগাযোগের নম্বর</td><td>✅ হ্যাঁ</td></tr>
+            <tr><td>ইমেইল</td><td>অনুমোদন পেলে এই ইমেইলে লগইন করুন</td><td>✅ হ্যাঁ</td></tr>
+            <tr><td>ওয়েবসাইট</td><td>যদি থাকে</td><td>❌ না</td></tr>
+            <tr><td>ফেসবুক পেজ/গ্রুপ</td><td>ফেসবুক লিংক</td><td>❌ না</td></tr>
+            <tr><td>সহায়ক ডকুমেন্ট</td><td>সংগঠনের নিবন্ধন সনদ ইত্যাদি</td><td>❌ না</td></tr>
+          </tbody>
+        </table>
+        <div class="step-tip" style="margin-top: 10px;">
+          <strong>গুরুত্বপূর্ণ:</strong> ইমেইল ঠিকানা সঠিক দিন — পরে এই ইমেইলের Google অ্যাকাউন্ট দিয়ে ড্যাশবোর্ডে লগইন করতে হবে।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৩</div>
+      <div class="step-body">
+        <div class="step-title">অনুমোদনের অপেক্ষা করুন</div>
+        <div class="step-desc">
+          "Submit Registration" ক্লিক করলে আবেদন জমা হবে। সিস্টেম অ্যাডমিন যাচাই করে অনুমোদন দেবেন। অনুমোদনের পরে আপনার নিবন্ধিত ইমেইলে জানানো হবে।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৪</div>
+      <div class="step-body">
+        <div class="step-title">কমিউনিটি ড্যাশবোর্ডে লগইন করুন</div>
+        <div class="step-desc">
+          অনুমোদন পেলে <strong>fenibloodline.com/login</strong> পেজে যান। লগইন পেজে <strong>"Community"</strong> ট্যাব নির্বাচন করুন। নিবন্ধিত ইমেইলের Google অ্যাকাউন্ট দিয়ে সাইন ইন করুন। সফল লগইনের পরে স্বয়ংক্রিয়ভাবে ড্যাশবোর্ডে চলে যাবেন।
+        </div>
+        <div class="step-tip">
+          <strong>মনে রাখুন:</strong> লগইনের সময় অবশ্যই <em>নিবন্ধনের সময় দেওয়া ইমেইলের</em> Google অ্যাকাউন্ট ব্যবহার করুন।
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── ড্যাশবোর্ড পরিচালনা ─── -->
+  <div class="section-header no-break" style="margin-top: 36px;">
+    <div class="section-icon">📊</div>
+    <div>
+      <h2>কমিউনিটি ড্যাশবোর্ড পরিচালনা</h2>
+      <div class="sub">অনুমোদনের পরে যেভাবে ড্যাশবোর্ড ব্যবহার করবেন</div>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step no-break">
+      <div class="step-num">১</div>
+      <div class="step-body">
+        <div class="step-title">সদস্য যোগ করুন — Members ট্যাব</div>
+        <div class="step-desc">
+          বাম মেনু থেকে <strong>"Members" / "সদস্য"</strong> ট্যাবে যান। <strong>"Add Member"</strong> বাটনে ক্লিক করে সদস্যের তথ্য পূরণ করুন:
+          নাম, রক্তের গ্রুপ, ফোন, ইমেইল, এলাকা, ঠিকানা।
+          প্রতিটি সদস্যের জন্য আলাদা আইডি কার্ড প্রিন্ট করা যাবে।
+        </div>
+        <div class="step-tip">
+          <strong>টিপস:</strong> সদস্যের প্রোফাইল ছবির URL দিলে আইডি কার্ডে ছবি আসবে। Google Photos বা যেকোনো পাবলিক ছবির লিংক দিতে পারেন।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">২</div>
+      <div class="step-body">
+        <div class="step-title">রক্তদান নথিভুক্ত করুন — Donations ট্যাব</div>
+        <div class="step-desc">
+          <strong>"Donations" / "রক্তদান"</strong> ট্যাবে গিয়ে <strong>"Record Donation"</strong> বাটনে ক্লিক করুন।
+          ডোনার ও রোগীর তথ্য পূরণ করুন। সদস্য হলে <em>Quick-fill</em> অপশনে নাম টাইপ করে সার্চ করলে তথ্য স্বয়ংক্রিয়ভাবে পূরণ হবে।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৩</div>
+      <div class="step-body">
+        <div class="step-title">সদস্যের আইডি কার্ড প্রিন্ট করুন</div>
+        <div class="step-desc">
+          Members তালিকায় প্রতিটি সদস্যের পাশে কার্ড আইকন (💳) আছে। ক্লিক করলে আইডি কার্ড দেখাবে।
+          <strong>"Download PNG"</strong> বাটনে ক্লিক করে ছবি ডাউনলোড করুন এবং প্রিন্ট করুন।
+          আইডি কার্ডে কমিউনিটির নাম ও লোগো স্বয়ংক্রিয়ভাবে যুক্ত হবে।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৪</div>
+      <div class="step-body">
+        <div class="step-title">কমিউনিটির প্রোফাইল আপডেট করুন — Profile ট্যাব</div>
+        <div class="step-desc">
+          <strong>"Profile"</strong> ট্যাবে গিয়ে কমিউনিটির নাম, ফোন, ওয়েবসাইট, ফেসবুক লিংক এবং লোগো পরিবর্তন করতে পারবেন।
+        </div>
+      </div>
+    </div>
+
+    <div class="step no-break">
+      <div class="step-num">৫</div>
+      <div class="step-body">
+        <div class="step-title">ড্যাশবোর্ড পরিসংখ্যান দেখুন</div>
+        <div class="step-desc">
+          <strong>"Dashboard"</strong> ট্যাবে মোট সদস্য, মোট রক্তদান, এবং শীর্ষ ১০ ডোনারের তালিকা দেখতে পাবেন।
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- QUICK REFERENCE TABLE                     -->
+  <!-- ══════════════════════════════════════════ -->
+
+  <div class="section-header no-break">
+    <div class="section-icon">📋</div>
+    <div>
+      <h2>দ্রুত রেফারেন্স</h2>
+      <div class="sub">গুরুত্বপূর্ণ পেজ ও লিংকের তালিকা</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>পেজ</th>
+        <th>URL</th>
+        <th>কাজ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>হোম</td><td>/</td><td>মূল পেজ — সাম্প্রতিক ডোনার ও অনুরোধ</td></tr>
+      <tr><td>রক্তদাতা খুঁজুন</td><td>/find-donor</td><td>রক্তের গ্রুপ ও এলাকা দিয়ে ডোনার সার্চ</td></tr>
+      <tr><td>জরুরি রক্ত</td><td>/emergency</td><td>হাসপাতালের জরুরি রক্তের অনুরোধ</td></tr>
+      <tr><td>ডোনার নিবন্ধন</td><td>/register</td><td>রক্তদাতা হিসেবে নিবন্ধন</td></tr>
+      <tr><td>আমার প্রোফাইল</td><td>/profile</td><td>নিজের তথ্য ও আইডি কার্ড</td></tr>
+      <tr><td>লগইন</td><td>/login</td><td>Google দিয়ে সাইন ইন</td></tr>
+      <tr><td>কমিউনিটি নিবন্ধন</td><td>/community/register</td><td>কমিউনিটি আবেদন ফর্ম</td></tr>
+      <tr><td>কমিউনিটি ড্যাশবোর্ড</td><td>/community/dashboard</td><td>কমিউনিটি পরিচালনা (অনুমোদিতদের জন্য)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ─── সাধারণ সমস্যা ─── -->
+  <div class="section-header no-break" style="margin-top: 36px;">
+    <div class="section-icon">❓</div>
+    <div>
+      <h2>সাধারণ সমস্যা ও সমাধান</h2>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step no-break">
+      <div class="step-num">?</div>
+      <div class="step-body">
+        <div class="step-title">আমি ডোনার তালিকায় দেখা যাচ্ছি না</div>
+        <div class="step-desc">প্রোফাইলে গিয়ে "রক্তদানে প্রস্তুত" / "Ready to Donate" টগলটি চালু আছে কিনা যাচাই করুন।</div>
+      </div>
+    </div>
+    <div class="step no-break">
+      <div class="step-num">?</div>
+      <div class="step-body">
+        <div class="step-title">কমিউনিটি ড্যাশবোর্ডে ঢুকতে পারছি না</div>
+        <div class="step-desc">নিবন্ধনের সময় দেওয়া ইমেইলের Google অ্যাকাউন্ট দিয়ে লগইন করুন। যদি অনুমোদন না হয়ে থাকে তাহলে অ্যাডমিনের সাথে যোগাযোগ করুন।</div>
+      </div>
+    </div>
+    <div class="step no-break">
+      <div class="step-num">?</div>
+      <div class="step-body">
+        <div class="step-title">আইডি কার্ডে নাম কাটা যাচ্ছে</div>
+        <div class="step-desc">আইডি কার্ড পপআপ খোলার পরে কিছুক্ষণ অপেক্ষা করুন যতক্ষণ ছবি লোড হয়। তারপর Download বাটনে ক্লিক করুন।</div>
+      </div>
+    </div>
+    <div class="step no-break">
+      <div class="step-num">?</div>
+      <div class="step-body">
+        <div class="step-title">ওয়েবসাইটে ডেটা দেখা যাচ্ছে না</div>
+        <div class="step-desc">পেজ রিফ্রেশ করুন (F5)। সমস্যা থাকলে কিছুক্ষণ পরে আবার চেষ্টা করুন।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Footer ── -->
+  <div class="footer">
+    <p>🩸 <strong>Feni Blood Line</strong> — প্রযুক্তি ও সম্প্রদায়ের মাধ্যমে ফেনী জেলায় জীবন বাঁচাচ্ছি</p>
+    <p style="margin-top: 6px;">fenibloodline.com &nbsp;|&nbsp; এই নির্দেশিকা প্রিন্ট করে রাখুন অথবা PDF হিসেবে সেভ করুন</p>
+  </div>
+
+</div>
+
+<script>
+  // Auto print dialog on load if ?print=1
+  if (new URLSearchParams(window.location.search).get("print") === "1") {
+    window.addEventListener("load", () => setTimeout(() => window.print(), 500));
+  }
+</script>
+</body>
+</html>
