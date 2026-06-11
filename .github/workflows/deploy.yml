@@ -69,16 +69,6 @@ jobs:
             NEXT_PUBLIC_FIREBASE_PROJECT_ID=feni-blood-line-2062a
             NEXT_PUBLIC_FIREBASE_APP_ID=1:68824200452:web:40c1c440570331ba71cc51
 
-      - name: Copy deploy files to VPS
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          source: "deploy/*"
-          target: /opt/feni/frontend
-          overwrite: true
-
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1
         env:
@@ -86,13 +76,24 @@ jobs:
           NGINX_CHANGED: ${{ steps.changes.outputs.nginx }}
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GHCR_USER: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          envs: APP_CHANGED,NGINX_CHANGED,GHCR_TOKEN,GHCR_USER
+          timeout: 90s
+          command_timeout: 15m
+          envs: APP_CHANGED,NGINX_CHANGED,GHCR_TOKEN,GHCR_USER,REPO,SHA
           script: |
             set -e
+            # Fetch deploy files over the GitHub API (avoids a separate flaky scp connection)
+            mkdir -p /opt/feni/frontend/deploy/nginx
+            API="https://api.github.com/repos/$REPO/contents"
+            HDR="Authorization: token $GHCR_TOKEN"
+            ACC="Accept: application/vnd.github.raw"
+            curl -fsSL -H "$HDR" -H "$ACC" "$API/deploy/docker-compose.yml?ref=$SHA" -o /opt/feni/frontend/deploy/docker-compose.yml
+            curl -fsSL -H "$HDR" -H "$ACC" "$API/deploy/nginx/fenibloodline.com.conf?ref=$SHA" -o /opt/feni/frontend/deploy/nginx/fenibloodline.com.conf
             if [ "$NGINX_CHANGED" = "true" ]; then
               if [ -f /etc/letsencrypt/live/fenibloodline.com/fullchain.pem ]; then
                 echo ">> Updating nginx config"
