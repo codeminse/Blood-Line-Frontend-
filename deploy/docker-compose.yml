@@ -1,0 +1,8 @@
+services:
+  web:
+    image: ghcr.io/codeminse/blood-line-frontend:latest
+    container_name: feni-web
+    restart: unless-stopped
+    ports:
+      # Host port 3100 (3000 is taken by another app on the VPS)
+      - "127.0.0.1:3100:3000"
