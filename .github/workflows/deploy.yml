@@ -89,9 +89,18 @@ jobs:
             mkdir -p ~/.ssh
             printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
             chmod 600 ~/.ssh/deploy_key
-            ssh -i ~/.ssh/deploy_key \
-              -o StrictHostKeyChecking=accept-new \
-              -o ConnectTimeout=30 \
-              "$VPS_USER@$VPS_HOST" \
-              "APP_CHANGED='$APP_CHANGED' NGINX_CHANGED='$NGINX_CHANGED' GHCR_TOKEN='$GHCR_TOKEN' GHCR_USER='$GHCR_USER' REPO='$REPO' SHA='$SHA' bash -s" \
-              < deploy/remote-deploy.sh
+            # Port 22 is rate-limit-filtered by the VPS provider for cloud IPs;
+            # prefer 2222 (opened in the provider firewall), fall back to 22.
+            for PORT in 2222 22; do
+              if ssh -i ~/.ssh/deploy_key -p "$PORT" \
+                  -o StrictHostKeyChecking=accept-new \
+                  -o ConnectTimeout=20 \
+                  "$VPS_USER@$VPS_HOST" \
+                  "APP_CHANGED='$APP_CHANGED' NGINX_CHANGED='$NGINX_CHANGED' GHCR_TOKEN='$GHCR_TOKEN' GHCR_USER='$GHCR_USER' REPO='$REPO' SHA='$SHA' bash -s" \
+                  < deploy/remote-deploy.sh; then
+                echo "Deployed via port $PORT"
+                exit 0
+              fi
+              echo "Port $PORT failed, trying next"
+            done
+            exit 1
